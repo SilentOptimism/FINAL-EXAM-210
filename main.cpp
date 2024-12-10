@@ -1,10 +1,12 @@
 #include <iostream>
-using namespace std;
-
 #include <chrono>
+#include <deque>
+
+using namespace std;
 using namespace std::chrono;
 
-// Used chat gpt to generate the random people names
+
+// Used chatgpt to generate the random people names
 string names[50] = {
     "Alice", "Bob", "Charlie", "David", "Emily",
     "Frank", "Grace", "Henry", "Iris", "Jack",
@@ -17,10 +19,16 @@ string names[50] = {
     "Oscar", "Piper", "Quinn", "Riley", "Samuel"
 };
 
-// Used chat gpt to generate the drink names
+// Used chatgpt to generate the drink types
 string drinks[10] = {
         "Coffee", "Tea", "Water", "Juice", "Soda",
         "Milk", "Wine", "Beer", "Cocktail", "Hot Chocolate"
+};
+
+// Used chatgpt to generate the muffin types
+string muffins[10] = {
+        "Blueberry", "Chocolate Chip", "Banana Nut", "Cranberry Orange", "Lemon Poppy Seed",
+        "Pumpkin Spice", "Double Chocolate", "Coffee", "Bran", "Apple Cinnamon"
 };
 
 struct Node{
@@ -82,6 +90,30 @@ public:
 
 };
 
+class MuffinBooth{
+private:
+    deque<string> Customer;
+    deque<string> Order;
+
+public:
+    void push_back_rand(){
+        Customer.push_back(names[rand()%50]);
+        Order.push_back(muffins[rand()%10]);
+    }
+
+    void pop_front(){
+        cout << Customer.front() << " was served " << Order.front() << endl;
+        Customer.pop_front();
+        Order.pop_front();
+    }
+
+    void display(){
+        prin
+
+    }
+
+};
+
 
 int main(int argc, char const *argv[]){
     srand(time(NULL)); // Seeds random number
@@ -108,7 +140,7 @@ int main(int argc, char const *argv[]){
             int newCustomerChance = 50;
             int event = rand() %100;
 
-            // ACTUAL SIMULATION CODE HERE 
+            // ACTUAL SIMULATION CODE HERE
             cout << "Round: " << round << endl;
             cafe.pop_front();
             cout << endl;
@@ -127,7 +159,6 @@ int main(int argc, char const *argv[]){
         }
 
     }
-    
     
     return 0;
 }
