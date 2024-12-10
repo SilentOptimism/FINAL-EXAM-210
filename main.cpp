@@ -16,7 +16,8 @@ string names[50] = {
     "Zachary", "Abigail", "Benjamin", "Chloe", "Daniel",
     "Eleanor", "Finn", "Georgia", "Harper", "Isaac",
     "Jasmine", "Kai", "Lena", "Mason", "Nora",
-    "Oscar", "Piper", "Quinn", "Riley", "Samuel"
+    "Oscar", "Piper", "Quinn", "Riley", "Samuel", "Peter",
+    "Hunter", "Alexandra", "Michelle", "Mark" 
 };
 
 // Used chatgpt to generate the drink types
@@ -28,7 +29,7 @@ string drinks[10] = {
 // Used chatgpt to generate the muffin types
 string muffins[10] = {
         "Blueberry", "Chocolate Chip", "Banana Nut", "Cranberry Orange", "Lemon Poppy Seed",
-        "Pumpkin Spice", "Double Chocolate", "Coffee", "Bran", "Apple Cinnamon"
+        "Pumpkin Spice", "Double Chocolate", "Rainbow", "Bran", "Apple Cinnamon"
 };
 
 struct Node{
@@ -80,12 +81,16 @@ public:
     }
 
     void display(){
-        cout << "Cafe" << endl;
-        Node* curr = head;
+        if(head!=NULL){
+            Node* curr = head;
 
-        while(curr!= NULL){
-            cout << curr->customerName << " wants " << curr->product << endl;
-            curr = curr->next;
+            while(curr!= NULL){
+                cout << curr->customerName << " wants " << curr->product << endl;
+                curr = curr->next;
+            }
+        }
+        else{
+            cout << "Cafe is Empty" << endl;
         }
         cout << endl;
     }
@@ -110,18 +115,23 @@ public:
     }
 
     void display(){
-        deque<string>::iterator currOrder = Order.begin();
+        if(!Customer.empty()){
+            deque<string>::iterator currOrder = Order.begin();
 
-        deque<string>::iterator currCust = Customer.begin();
-        deque<string>::iterator finalCust = Customer.end();
+            deque<string>::iterator currCust = Customer.begin();
+            deque<string>::iterator finalCust = Customer.end();
 
-        cout << "Muffin store" << endl;
+            while(finalCust != currCust){
+                cout << *(currCust) << " wants " << *(currOrder) << endl;
 
-        while(finalCust != currCust){
-            currCust++;
-            currOrder++;
+                currCust++;
+                currOrder++;
+            }
+
         }
-
+        else{
+            cout << "Muffin store is empty" << endl;
+        }
         cout << endl;
 
     }
@@ -157,18 +167,17 @@ int main(int argc, char const *argv[]){
 
         milliseconds duration = duration_cast<milliseconds>(now-start);
 
-        if(duration.count() >= 3000){
+        if(duration.count() >= 1000){
             int newCustomerChance = 50;
             int cafeEvent = rand() % 100;
             int muffinEvent = rand() % 100;
 
             // ACTUAL SIMULATION CODE HERE
-            cout << "Round: " << round << endl;
-
-
+            cout << "Cafe Round: " << round << endl;
             cafe.pop_front();
             cafe.display();
 
+            cout << "Muffin Store Round: " << round << endl;
             muffinStore.pop_front();
             muffinStore.display();
 
