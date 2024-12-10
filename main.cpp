@@ -32,6 +32,12 @@ string muffins[10] = {
         "Pumpkin Spice", "Double Chocolate", "Rainbow", "Bran", "Apple Cinnamon"
 };
 
+// Used chatgpt to generate the friendship bracelet types
+string bracelets[10] = {
+        "Chevron bracelet", "Friendship bracelet", "Shamballa bracelet", "Chainmaille bracelet", "Beaded bracelet", 
+        "Knotted bracelet", "Embroidered bracelet", "Woven bracelet", "Macrame bracelet", "Sennit bracelet"
+};
+
 struct Node{
     string customerName;
     string product;
@@ -109,27 +115,31 @@ public:
     }
 
     void pop_front(){
-        cout << Customer.front() << " was served " << Order.front() << endl;
-        Customer.pop_front();
-        Order.pop_front();
+        if(!Customer.empty()){
+            cout << Customer.front() << " was served " << Order.front() << endl;
+            Customer.pop_front();
+            Order.pop_front();
+        }
     }
 
     void display(){
         if(!Customer.empty()){
-            for(string test: Customer){
-                cout << test << endl;
+            deque<string>::iterator currOrder = Order.begin();
+
+            for(string name: Customer){
+                cout << name << " wants " << (*currOrder) << endl;
             }
-            
         }
         else{
-            cout << "Muffin store is empty" << endl;
+            cout << "Muffin Store Empty" << endl;
         }
-        cout << endl;
-
     }
 
 };
 
+class BraceletBooth{
+
+};
 
 int main(int argc, char const *argv[]){
     srand(time(NULL)); // Seeds random number
@@ -159,7 +169,7 @@ int main(int argc, char const *argv[]){
 
         milliseconds duration = duration_cast<milliseconds>(now-start);
 
-        if(duration.count() >= 1000){
+        if(duration.count() >= 200){
             int newCustomerChance = 50;
             int cafeEvent = rand() % 100;
             int muffinEvent = rand() % 100;
