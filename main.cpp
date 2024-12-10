@@ -41,35 +41,42 @@ private:
     Node* head = NULL;
 
 public:
-    void push(string customerName, string product){
+    void pop_front(){
+        if(head != NULL){
+            Node* temp = head->next;
+            delete head;
+            head = temp;
+        }
+    }
+
+    void push_back(string customerName, string product){
         if(!head ){
             head = new Node(customerName,product);
         }
         else{
             Node* curr = head;
 
-            while (!curr){
+            while (curr->next != NULL ){
                 curr = curr->next;
             }
-            curr = new Node(customerName, product);
+            curr->next = new Node(customerName, product);
         }
     }
 
     void pushRand(){
         string randName = names[rand() % 50];
-        string randDrink = drinks[rand() % 50];
+        string randDrink = drinks[rand() % 10];
 
-        push(randName, randDrink);
+        push_back(randName, randDrink);
     }
 
     void display(){
         Node* curr = head;
 
-        while(curr != NULL){
+        while(curr!= NULL){
             cout << "Name: " << curr->customerName << " Drink: " << curr->product << endl;
             curr = curr->next;
         }
-
     }
 
 };
@@ -80,6 +87,7 @@ int main(int argc, char const *argv[]){
     int round = 0; // Indicates our rounds
     CoffeeBooth cafe;
 
+    // Initializes our cafe
     cafe.pushRand();
     cafe.pushRand();
     cafe.pushRand();
@@ -94,8 +102,12 @@ int main(int argc, char const *argv[]){
 
         milliseconds duration = duration_cast<milliseconds>(now-start);
 
-        if(duration.count() > 1000){
+        if(duration.count() >= 1000){
+
             // ACTUAL SIMULATION CODE HERE 
+            cafe.pop_front();
+            cafe.display();
+            cout << round << endl;
 
             // Creates/Pushes 3 random people
 
