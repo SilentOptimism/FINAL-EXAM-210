@@ -80,12 +80,14 @@ public:
     }
 
     void display(){
+        cout << "Cafe" << endl;
         Node* curr = head;
 
         while(curr!= NULL){
-            cout << "Name: " << curr->customerName << " Drink: " << curr->product << endl;
+            cout << curr->customerName << " wants " << curr->product << endl;
             curr = curr->next;
         }
+        cout << endl;
     }
 
 };
@@ -108,7 +110,19 @@ public:
     }
 
     void display(){
-        prin
+        deque<string>::iterator currOrder = Order.begin();
+
+        deque<string>::iterator currCust = Customer.begin();
+        deque<string>::iterator finalCust = Customer.end();
+
+        cout << "Muffin store" << endl;
+
+        while(finalCust != currCust){
+            currCust++;
+            currOrder++;
+        }
+
+        cout << endl;
 
     }
 
@@ -119,6 +133,7 @@ int main(int argc, char const *argv[]){
     srand(time(NULL)); // Seeds random number
     int round = 0; // Indicates our rounds
     CoffeeBooth cafe;
+    MuffinBooth muffinStore;
 
     cout << "Started" << endl;
     // Initializes our cafe
@@ -126,7 +141,13 @@ int main(int argc, char const *argv[]){
     cafe.push_back_rand();
     cafe.push_back_rand();
 
+    // Initializes our muffin store
+    muffinStore.push_back_rand();
+    muffinStore.push_back_rand();
+    muffinStore.push_back_rand();
+
     cafe.display();
+    muffinStore.display();
 
     time_point start = high_resolution_clock::now();
     time_point now = high_resolution_clock::now();
@@ -136,19 +157,24 @@ int main(int argc, char const *argv[]){
 
         milliseconds duration = duration_cast<milliseconds>(now-start);
 
-        if(duration.count() >= 1000){
+        if(duration.count() >= 3000){
             int newCustomerChance = 50;
-            int event = rand() %100;
+            int cafeEvent = rand() % 100;
+            int muffinEvent = rand() % 100;
 
             // ACTUAL SIMULATION CODE HERE
             cout << "Round: " << round << endl;
+
+
             cafe.pop_front();
-            cout << endl;
             cafe.display();
 
-            if(event < newCustomerChance){
-                cafe.push_back_rand();
-            }
+            muffinStore.pop_front();
+            muffinStore.display();
+
+
+            if(cafeEvent < newCustomerChance) {cafe.push_back_rand();}
+            if(muffinEvent < newCustomerChance) {muffinStore.push_back_rand();}
 
 
 
