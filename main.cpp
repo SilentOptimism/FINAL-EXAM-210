@@ -194,17 +194,10 @@ int main(int argc, char const *argv[]){
     braceletStore.push_back_rand();
     braceletStore.push_back_rand();
 
-    cafe.display();
-    cout << endl;
-    muffinStore.display();
-    cout << endl;
-    braceletStore.display();
-    cout << endl;
-
     time_point start = high_resolution_clock::now();
     time_point now = high_resolution_clock::now();
 
-    while (round <= 10){
+    while (round < 10){
         time_point now = high_resolution_clock::now();
 
         milliseconds duration = duration_cast<milliseconds>(now-start);
@@ -216,19 +209,17 @@ int main(int argc, char const *argv[]){
             int muffinEvent = rand() % 100;
             int braceletEvent = rand() % 100;
 
-            cout << "Cafe Round: " << round << endl;
+            cout << "Round: " << round + 1 << endl;
             cafe.pop_front();
             cafe.display();
             
             cout << endl;
 
-            cout << "Muffin Store Round: " << round << endl;
             muffinStore.pop_front();
             muffinStore.display();
 
             cout << endl;
 
-            cout << "Bracelet Store Round: " << round << endl;
             braceletStore.pop_front();
             braceletStore.display();
 
