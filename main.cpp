@@ -2,6 +2,7 @@
 #include <chrono>
 #include <deque>
 #include <vector>
+#include <list>
 
 using namespace std;
 using namespace std::chrono;
@@ -38,6 +39,13 @@ string bracelets[10] = {
         "Chevron bracelet", "Friendship bracelet", "Shamballa bracelet", "Chainmaille bracelet", "Beaded bracelet", 
         "Knotted bracelet", "Embroidered bracelet", "Woven bracelet", "Macrame bracelet", "Sennit bracelet"
 };
+
+// Used chatgpt to generate the candies
+string candies[10] = {
+        "Chocolate Bar", "Gummy Bears", "Lollipop", "Candy Cane", "Sour Candy",
+        "Caramel", "Jawbreaker", "Chocolate Chip Cookie", "Marshmallow", "Licorice"
+};
+
 
 struct Node{
     string customerName;
@@ -137,6 +145,40 @@ public:
 
 };
 
+class CandyBooth{
+private:
+    list<string> Customer;
+    list<string> Order;
+
+public:
+    void push_back_rand(){
+        Customer.push_back(names[rand()%50]);
+        Order.push_back(candies[rand()%10]);
+    }
+
+    void pop_front(){
+        if(!Customer.empty()){
+            cout << Customer.front() << " was served " << Order.front() << endl;
+            Customer.pop_front();
+            Order.pop_front();
+        }
+    }
+
+    void display(){
+        if(!Customer.empty()){
+            list<string>::iterator currOrder = Order.begin();
+
+            for(string name: Customer){
+                cout << name << " wants " << (*currOrder) << endl;
+            }
+        }
+        else{
+            cout << "Candy Store Empty" << endl;
+        }
+    }
+
+};
+
 class BraceletBooth{
 private:
     vector<string> Customer;
@@ -177,6 +219,7 @@ int main(int argc, char const *argv[]){
     CoffeeBooth cafe;
     MuffinBooth muffinStore;
     BraceletBooth braceletStore;
+    CandyBooth candyStore;
 
     cout << "Started" << endl;
     // Initializes our cafe
@@ -194,6 +237,11 @@ int main(int argc, char const *argv[]){
     braceletStore.push_back_rand();
     braceletStore.push_back_rand();
 
+    // Initializes our candy store
+    candyStore.push_back_rand();
+    candyStore.push_back_rand();
+    candyStore.push_back_rand();
+
     time_point start = high_resolution_clock::now();
     time_point now = high_resolution_clock::now();
 
@@ -208,6 +256,7 @@ int main(int argc, char const *argv[]){
             int cafeEvent = rand() % 100;
             int muffinEvent = rand() % 100;
             int braceletEvent = rand() % 100;
+            int candyEvent = rand() % 100;
 
             cout << "Round: " << round + 1 << endl;
             cafe.pop_front();
@@ -225,9 +274,13 @@ int main(int argc, char const *argv[]){
 
             cout << endl;
 
+            candyStore.pop_front();
+            candyStore.display();
+
             if(cafeEvent < newCustomerChance) {cafe.push_back_rand();}
             if(muffinEvent < newCustomerChance) {muffinStore.push_back_rand();}
             if(braceletEvent < newCustomerChance) {braceletStore.push_back_rand();}
+            if(candyEvent < newCustomerChance) {candyStore.push_back_rand();}
 
             start = high_resolution_clock::now();
             round++;
