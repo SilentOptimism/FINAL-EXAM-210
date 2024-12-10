@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <deque>
+#include <vector>
 
 using namespace std;
 using namespace std::chrono;
@@ -98,7 +99,6 @@ public:
         else{
             cout << "Cafe is Empty" << endl;
         }
-        cout << endl;
     }
 
 };
@@ -138,6 +138,36 @@ public:
 };
 
 class BraceletBooth{
+private:
+    vector<string> Customer;
+    vector<string> Order;
+
+public:
+    void push_back_rand(){
+        Customer.push_back(names[rand()%50]);
+        Order.push_back(bracelets[rand()%10]);
+    }
+
+    void pop_front(){
+        if(!Customer.empty()){
+            cout << Customer.front() << " was served " << Order.front() << endl;
+            Customer.erase(Customer.begin());
+            Order.erase(Order.begin());
+        }
+    }
+
+    void display(){
+        if(!Customer.empty()){
+            vector<string>::iterator currOrder = Order.begin();
+
+            for(string name: Customer){
+                cout << name << " wants " << (*currOrder) << endl;
+            }
+        }
+        else{
+            cout << "Bracelet Store Empty" << endl;
+        }
+    }
 
 };
 
@@ -146,6 +176,7 @@ int main(int argc, char const *argv[]){
     int round = 0; // Indicates our rounds
     CoffeeBooth cafe;
     MuffinBooth muffinStore;
+    BraceletBooth braceletStore;
 
     cout << "Started" << endl;
     // Initializes our cafe
@@ -158,8 +189,17 @@ int main(int argc, char const *argv[]){
     muffinStore.push_back_rand();
     muffinStore.push_back_rand();
 
+    // Initializes our bracelet store
+    braceletStore.push_back_rand();
+    braceletStore.push_back_rand();
+    braceletStore.push_back_rand();
+
     cafe.display();
+    cout << endl;
     muffinStore.display();
+    cout << endl;
+    braceletStore.display();
+    cout << endl;
 
     time_point start = high_resolution_clock::now();
     time_point now = high_resolution_clock::now();
@@ -170,26 +210,33 @@ int main(int argc, char const *argv[]){
         milliseconds duration = duration_cast<milliseconds>(now-start);
 
         if(duration.count() >= 200){
+            // ACTUAL SIMULATION CODE HERE
             int newCustomerChance = 50;
             int cafeEvent = rand() % 100;
             int muffinEvent = rand() % 100;
+            int braceletEvent = rand() % 100;
 
-            // ACTUAL SIMULATION CODE HERE
             cout << "Cafe Round: " << round << endl;
             cafe.pop_front();
             cafe.display();
+            
+            cout << endl;
 
             cout << "Muffin Store Round: " << round << endl;
             muffinStore.pop_front();
             muffinStore.display();
 
+            cout << endl;
+
+            cout << "Bracelet Store Round: " << round << endl;
+            braceletStore.pop_front();
+            braceletStore.display();
+
+            cout << endl;
 
             if(cafeEvent < newCustomerChance) {cafe.push_back_rand();}
             if(muffinEvent < newCustomerChance) {muffinStore.push_back_rand();}
-
-
-
-            // Creates/Pushes 3 random people
+            if(braceletEvent < newCustomerChance) {braceletStore.push_back_rand();}
 
             start = high_resolution_clock::now();
             round++;
