@@ -117,17 +117,17 @@ public:
     void display(){
         if(!Customer.empty()){
             deque<string>::iterator currOrder = Order.begin();
+            deque<string>::iterator finalOrder = Order.end();
 
             deque<string>::iterator currCust = Customer.begin();
             deque<string>::iterator finalCust = Customer.end();
 
-            while(finalCust != currCust){
+            while(currCust != finalCust && currOrder != finalOrder){
                 cout << *(currCust) << " wants " << *(currOrder) << endl;
 
                 currCust++;
                 currOrder++;
             }
-
         }
         else{
             cout << "Muffin store is empty" << endl;
