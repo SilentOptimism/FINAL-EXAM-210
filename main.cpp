@@ -26,9 +26,13 @@ string drinks[10] = {
 struct Node{
     string customerName;
     string product;
-    Node* next = NULL;
+    Node* next;
 
-    Node(string name, string item) : customerName(name), product(item) {}
+    Node(string name, string item){
+        customerName = name;
+        product = item;
+        next = NULL;
+    }
     
 };
 
@@ -38,14 +42,17 @@ private:
 
 public:
     void push(string customerName, string product){
-        Node* curr = head;
-
-        while (curr != NULL){
-            curr = curr->next;
+        if(!head ){
+            head = new Node(customerName,product);
         }
+        else{
+            Node* curr = head;
 
-        curr = new Node(customerName, product);
-        cout << head->customerName << endl;
+            while (!curr){
+                curr = curr->next;
+            }
+            curr = new Node(customerName, product);
+        }
     }
 
     void pushRand(){
@@ -60,6 +67,7 @@ public:
 
         while(curr != NULL){
             cout << "Name: " << curr->customerName << " Drink: " << curr->product << endl;
+            curr = curr->next;
         }
 
     }
